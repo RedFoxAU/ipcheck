@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced User Info Analysis</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+    }
+    .info {
+      margin: 20px 0;
+    }
+    .info p {
+      margin: 5px 0;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Advanced User Info Analysis</h1>
+    <div class="info" id="userinfo">Loading user info...</div>
+  </div>
+  <script>
+    async function fetchUserInfo() {
+      try {
+        // Fetch IP info
+        const ipInfoResponse = await fetch(`https://ipinfo.io/json?token=ce94bab5ea3c7a`);
+        const ipData = await ipInfoResponse.json();
+
+        const userInfoDiv = document.getElementById('userinfo');
+
+        userInfoDiv.innerHTML = `
+          <h2>IP Information</h2>
+          <p><strong>IP Address:</strong> ${ipData.ip}</p>
+          <p><strong>City:</strong> ${ipData.city}</p>
+          <p><strong>Region:</strong> ${ipData.region}</p>
+          <p><strong>Country:</strong> ${ipData.country}</p>
+          <p><strong>Location:</strong> ${ipData.loc}</p>
+          <p><strong>Organization:</strong> ${ipData.org}</p>
+          <p><strong>Timezone:</strong> ${ipData.timezone}</p>
+          <h2>Browser Information</h2>
+          <p><strong>User Agent:</strong> ${navigator.userAgent}</p>
+          <p><strong>Platform:</strong> ${navigator.platform}</p>
+          <p><strong>Language:</strong> ${navigator.language}</p>
+        `;
+      } catch (error) {
+        document.getElementById('userinfo').innerText = 'Error loading user info';
+        document.getElementById('userinfo').classList.add('error');
+      }
+    }
+
+    fetchUserInfo();
+  </script>
+</body>
+</html>
